@@ -5,11 +5,12 @@
 
     final class Topic extends Entity{ //claase finale, ne peut pas avoir d'enfant, la classe Topic hérite de entity
 /*liste des propriétée de la classe topic, définies en private , accessibles directement unqument par la classe topic*/
-        private $id;              //primary key id_topic
+        private $id;
+        private $dateTopic;              //primary key id_topic
         private $nameTopic;
-        private $dateTopic;
-        private $isLockTopic;        
-        private $user;             //foreign key user_id
+        private $isLockTopic; 
+        private $category;             //foreign key category_id       
+        private $user;                //foreign key user_id
         
         
 /*Hydrate : instance l'objet avec les donnnées de la BDD  - */
@@ -102,7 +103,7 @@
          */ 
         public function setIsLockTopic($closed)
         {
-                $this->getIsLockTopic = $closed;
+                $this->isLockTopic = $closed;
 
                 return $this;
         }

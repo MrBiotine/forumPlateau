@@ -51,7 +51,7 @@
                     ),
                     "category" => $categoryManager->findOneById($id),// Pour retrouver un élément selon un id
                     
-                    "user" => $userManager->findOneById($id)// Pour retrouver un élément selon un id 
+                    //"user" => $userManager->findOneById($id)// Pour retrouver un élément selon un id 
                 ]                                  
             ];
         }

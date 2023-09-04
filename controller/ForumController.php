@@ -13,24 +13,67 @@
     
     class ForumController extends AbstractController implements ControllerInterface{
 
-        public function index(){
-          
+        public function index(){          
 
-           return listCategorys();
+           return $this->listCategorys();
         
         }
-
-        public function listCategorys(){               // Fonction pour afficher la liste de toute les catégories
+/*--------------------------------------SECTION CATEGORY -----------------------------------------------------------------------------*/
+        public function listCategorys(){               // Display category list
             
-            $categoryManager = new CategoryManager();   // Instancier cette variable pour accéder aux méthodes de la classe
+            $categoryManager = new CategoryManager();   // Instantiate a new object to access the class's methods
 
-            return [                                    // Fonction native du FrameWork findAll() (se trouve dans Manager.php) on demande à la variable d'utiliser cette fonction
+            return [                                    // findAll() is a native function from framework
                 
                 "view" => VIEW_DIR."forum/listCategorys.php",
 
                 "data" => ["categorys" => $categoryManager->findAll(["nameCategory","ASC"])]                               
-            ];                                          // Permet d'afficher toutes les catégories
+            ];                                          // select all records from 'category' table, sort of by ascending name 
         }
+
+        //access form to add category
+
+        public function addFormCategory(){           
+
+            return [                                    // The function name must match the target file in order to access it.
+                
+                "view" => VIEW_DIR."forum/addFormCategory.php",                           
+            ];
+        }
+
+        public function addCategory(){                  // Function to add a category 
+            $session = new Session();                //instantiate a new session to use notification  
+
+            $categoryManager = new CategoryManager();   // Instantiate a new object to access the class's methods
+            
+            $name = filter_input(INPUT_POST, 'nameCategory', FILTER_SANITIZE_FULL_SPECIAL_CHARS); //filter the datas from addFormCategory.php
+
+            $categoryManager->add(['nameCategory' => $name]);   // Perform insert a new record in table 'category' 
+
+            return [                                    // The function name must match the target file in order to access it.
+                                           
+                "view" => VIEW_DIR."forum/listCategorys.php",
+                $session->addFlash('success',"Ajouté avec succès"),                   // Display the notification
+                "data" => ["categorys" => $categoryManager->findAll()]                               
+            ];
+        }
+
+        public function delCategory($id){               // Function to delete a category
+
+            $categoryManager = new CategoryManager();
+            $session = new Session();                   //instantiate a new session to use notification 
+
+            return [                                    // The function name must match the target file in order to access it.
+
+                "view" => VIEW_DIR."forum/listCategorys.php",  // redirect to the page displaying the categorys
+                $session->addFlash('success',"Supprimé avec succès"),// Display the notification
+                
+                "data" => [$categoryManager->delete($id), "categorys" => $categoryManager->findAll(["name", "ASC"])]           
+            ];
+        }
+
+        
+/*-------------------------------------SECTION TOPICS ----------------------------------------------------------------------------------*/
 
         public function listTopics($id) {
 

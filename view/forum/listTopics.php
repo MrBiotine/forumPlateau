@@ -1,4 +1,6 @@
 <?php
+//var initialisation
+$numberTopic = 0 ;
 
 $topics = $result["data"]['topics'];
 $category = $result["data"]['category'];
@@ -7,14 +9,13 @@ $category = $result["data"]['category'];
 
 <h1><?=$category->getNameCategory() ?></h1>
 
-
 <div class="">
     <table>
         <thead>
             <tr>
-                <th>TITRES</th>
-                <th>DATES&HEURES</th>
-                <th>PSEUDOS</th>
+                <th>Intitulé</th>
+                <th>Date de création</th>
+                <th>Auteur</th>
                 <th>OPTIONS</th>
             </tr>
         </thead>
@@ -49,11 +50,13 @@ $category = $result["data"]['category'];
                                 </td>
                             </tr>
                         </tbody>  
-                    <?php
+                <?php
+                $numberTopic ++;
                 }
-                // Afficher le nom de la Catégorie sélectionnée
-                echo "<div class='titreT'>".$topic->getCategory()->getNameCategory()."</div>";
-
+                ?>
+                <!-- Afficher le nombre de sujet dans la catégorie -->
+                <p>Il y a <?= $numberTopic ?> sujet<?= $numberTopic > 1 ? "s" : "" ?> dans cette catégorie</p>
+            <?php
             }else{// Sinon afficher ci dessous (Page Liste Topics sans Topics)
                
                 echo "<p> La catégorie ".$category->getNameCategory()." n'a pas encore de sujet</p>";
@@ -63,9 +66,9 @@ $category = $result["data"]['category'];
 
             ?>
                 <!-- Lien pour créer un nouveau Topic selon la catégorie -->
-                <a href="index.php?ctrl=forum&action=formulaireTopic&id=<?=$category->getId()?>">Créer un nouveau Topic</a>
-            <?php 
-        ?>
+               <p> <a href="index.php?ctrl=forum&action=addFormTopic&id=<?=$category->getId()?>">Créer un nouveau Topic</a> </p>
+            
+        
 
     </table>
 </div>

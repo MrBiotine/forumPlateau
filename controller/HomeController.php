@@ -21,7 +21,7 @@
 
         public function listUsers() {
 
-            $manager = new UserManager();
+            $manager = new UserManager(); //
             $users = $manager->findAll();
 
             return [

@@ -1,16 +1,17 @@
 <?php
 
-$topics = $result["data"]['users'];
+$users = $result["data"]['users'];
     
 ?>
 
 <h1>liste des users</h1>
 
 <?php
-foreach($topics as $topic ){
-
+foreach($users as $user ){
+/*var_dump($user) : use to debug errors*/
     ?>
-    <p><?=$topic->getPseudoUser()?></p>
+    <p><?=$user->getPseudoUser()?></p>
+    
     <?php
 }
 

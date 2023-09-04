@@ -7,8 +7,8 @@
 
     class CategoryManager extends Manager{
 
-        protected $className = "Model\Entities\Category";
-        protected $tableName = "category";
+        protected $className = "Model\Entities\Category"; //must match the entitie name
+        protected $tableName = "category"; //must match the table name in the DataBase
 
 
         public function __construct(){

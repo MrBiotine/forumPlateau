@@ -16,7 +16,7 @@ $category = $result["data"]['category'];
                 <th>Intitulé</th>
                 <th>Date de création</th>
                 <th>Auteur</th>
-                <th>OPTIONS</th>
+                <th>Action</th>
             </tr>
         </thead>
         <?php
@@ -33,18 +33,10 @@ $category = $result["data"]['category'];
                                 <td><?=$topic->getUser()->getPseudoUser()?></td>
                                 
                                 <td>
-                                    <div class="">
-
-                                        
+                                    <div class="">                                     
                                             
                                      <!-- Pour supprimer le topic sélectionné directement dans la liste -->
-                                     <form action="index.php?ctrl=forum&action=delTopic&id=<?=$topic->getId()?>" method="post">
-                        
-                                         <!-- Mettre une icône dans l'input -->
-                                         <input type="image" class="suppT" alt="Supprimer" src="./public/img/supp.jpg">
-                                     </form>
-
-                                        
+                                     <a href="index.php?ctrl=topic&action=delTopic&id=<?= $topic->getId() ?>"><i class="far fa-trash-alt"></i></a>                                      
 
                                     </div> 
                                 </td>

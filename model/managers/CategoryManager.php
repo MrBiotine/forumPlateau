@@ -15,6 +15,25 @@
             parent::connect();
         }
 
+        public function editCategory($id, $nameCategory){
+            $sql = "UPDATE " . $this->tableName . "
+                        SET nameCategory = :nameCategory, dateDerniereModification = NOW()
+                        WHERE id_" . $this->tableName . " = :id";
+            $params = [
+                "id" => $id,
+                "nameCategory" => $nameCategory
+            ];
+            
+            try{
+                return DAO::update($sql, $params);
+            }
+            catch(\PDOException $e){
+                echo $e->getMessage();
+                die();
+            }
+        }
+    }
+
 
         
 

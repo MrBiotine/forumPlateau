@@ -70,13 +70,13 @@
             $sql = "INSERT INTO ".$this->tableName."
                     (".implode(',', $keys).") 
                     VALUES
-                    (':".implode("',':", $keys)."')";
+                    (:".implode(" , :", $keys).")";
                     //"'Squalli', 'dfsyfshfbzeifbqefbq', 'sql@gmail.com'"
             /*
                 INSERT INTO user (username,password,email) VALUES ('Squalli', 'dfsyfshfbzeifbqefbq', 'sql@gmail.com') 
             */
             try{
-                return DAO::insert($sql, $keys);
+                return DAO::insert($sql, $data);
             }
             catch(\PDOException $e){
                 echo $e->getMessage();

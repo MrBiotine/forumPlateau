@@ -48,13 +48,27 @@
             
             $name = filter_input(INPUT_POST, 'nameCategory', FILTER_SANITIZE_FULL_SPECIAL_CHARS); //filter the datas from addFormCategory.php
 
-            $categoryManager->add(['nameCategory' => $name]);   // Perform insert a new record in table 'category' 
+            $data = [
+                'nameCategory' => $name
+            ];
+            $categoryManager->add($data);   // Perform insert a new record in table 'category' 
 
             return [                                    // The function name must match the target file in order to access it.
                                            
                 "view" => VIEW_DIR."forum/listCategorys.php",
                 $session->addFlash('success',"Ajouté avec succès"),                   // Display the notification
                 "data" => ["categorys" => $categoryManager->findAll()]                               
+            ];
+        }
+
+         //access form to edit category
+
+         public function editFormCategory($id){           
+
+            return [                                    // The function name must match the target file in order to access it.
+                
+                "view" => VIEW_DIR."forum/editFormCategory.php",
+                "data" => ["category" => $categoryManager->findOneById($id)]                           
             ];
         }
 

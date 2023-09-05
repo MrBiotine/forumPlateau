@@ -29,7 +29,51 @@ img {
     width: 100%;
     height: 100%;
 }
+/* La barre de navigation qui se trouve dans le header */
+header > nav{
 
+    height: 10vh;
+    background-color: var(--color-dblue);
+    font-weight: 600;
+    font-size: 1.4em;
+}
+/* Les liens de la barre de navigation */
+header > nav a{
+    
+    text-decoration: none;
+    color: var(--color-lblue);
+    height: 10vh;
+    padding: 0 30px 0 30px;
+}
+/* Changements lorsqu'on passe la souris par dessus un lien de la barre de navigation */
+header > nav a:hover{
+    background-color: var(--color-lblue);
+    color: var(--color-dblue);
+}
+
+/* Le contenu de la page */
+main{
+    text-align: center;
+}
+
+/* Le footer */
+footer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10vh;
+    width: 100%;
+    margin-top: 5vh;
+    background-color: var(--color-dblue);
+    color: var(--color-lblue);
+}
+footer a{
+    text-decoration: none;
+    color: var(--color-lblue);
+}
+footer a:hover{
+    text-decoration: underline;
+}
 /* Style pour le tableau */
 table {
     width: 100%;
@@ -82,7 +126,7 @@ form input[type="number"] {
 }
 
 #add-button:hover {
-    background-color: var(--color-dblue);
+    background-color: var(--color-dred);
 }
 
 #add-button:active {

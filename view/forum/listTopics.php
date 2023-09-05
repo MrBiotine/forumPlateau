@@ -8,7 +8,7 @@ $category = $result["data"]['category'];
 ?>
 
 <h1><?=$category->getNameCategory() ?></h1>
-
+<p><mark><a href="index.php?ctrl=forum&action=editFormCategory&id=<?=$category->getId()?>">Editer la catégorie</a></mark></p>
 <div class="">
     <table>
         <thead>

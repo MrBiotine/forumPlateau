@@ -63,12 +63,31 @@
 
          //access form to edit category
 
-         public function editFormCategory($id){           
+         public function editFormCategory($id){  
+            
+            $categoryManager = new CategoryManager();   // Instantiate a new object to access the class's methods
 
             return [                                    // The function name must match the target file in order to access it.
                 
                 "view" => VIEW_DIR."forum/editFormCategory.php",
                 "data" => ["category" => $categoryManager->findOneById($id)]                           
+            ];
+        }
+
+        public function editCategory($id){                  // Function to add a category 
+            $session = new Session();                //instantiate a new session to use notification  
+
+            $categoryManager = new CategoryManager();   // Instantiate a new object to access the class's methods
+            
+            $name = filter_input(INPUT_POST, 'nameCategory', FILTER_SANITIZE_FULL_SPECIAL_CHARS); //filter the datas from editFormCategory.php
+           
+            $categoryManager->editCategory($id, $name);   // Perform udate in table 'category' 
+
+            return [                                    // The function name must match the target file in order to access it.
+                                           
+                "view" => VIEW_DIR."forum/listCategorys.php",
+                $session->addFlash('success',"Edité avec succès"),                   // Display the notification
+                "data" => ["categorys" => $categoryManager->findAll()]                //Display the categorys list               
             ];
         }
 

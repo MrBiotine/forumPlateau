@@ -19,14 +19,14 @@
         public function listCategoryWithNumberTopic($order = null){
             $orderQuery = ($order) ? "ORDER BY " . $order[0] . " " . $order[1] : "";
             
-            $requete = "SELECT *, (SELECT COUNT(topic.id_topic)
+            $sql = "SELECT *, (SELECT COUNT(topic.id_topic)
                                 FROM topic
                                 WHERE topic." . $this->tableName . "_id = id_" . $this->tableName . "
-                                ) AS nombreTopic
+                                ) AS numberTopic
                     FROM " . $this->tableName . " a
                     ". $orderQuery;
             return $this->getMultipleResults(
-                DAO::select($requete),
+                DAO::select($sql),
                 $this->className
             );
         }

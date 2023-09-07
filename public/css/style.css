@@ -54,6 +54,7 @@ header > nav a:hover{
 /* Le contenu de la page */
 main{
     text-align: center;
+    padding: 5px;
 }
 
 /* Le footer */
@@ -114,7 +115,7 @@ form input[type="number"] {
 
 /* Style pour le bouton Ajouter */
 
-#add-button {
+#form-button {
     padding: 10px 15px;
     background-color: var(--color-lblue);
     border: none;
@@ -125,10 +126,10 @@ form input[type="number"] {
     transition: background-color 0.2s, transform 0.2s; /* Ajout de la transition pour l'effet métallique */
 }
 
-#add-button:hover {
+#form-button:hover {
     background-color: var(--color-dred);
 }
 
-#add-button:active {
+#form-button:active {
     transform: scale(0.95); /* Effet d'enfoncement lorsqu'il est cliqué */
 }

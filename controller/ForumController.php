@@ -27,8 +27,8 @@
                 
                 "view" => VIEW_DIR."forum/listCategorys.php",
 
-                "data" => ["categorys" => $categoryManager->findAll(["nameCategory","ASC"])]                               
-            ];                                          // select all records from 'category' table, sort of by ascending name 
+                "data" => ["categorys" => $categoryManager->listCategoryWithNumberTopic(["nameCategory","ASC"])]                               
+            ]; //Custom function which  select all records from 'category' table, sort of by ascending name and count the number topics inside
         }
 
         //access form to add category

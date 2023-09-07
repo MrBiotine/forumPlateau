@@ -6,6 +6,7 @@
     final class Category extends Entity {
         private $id; 
         private $nameCategory; 
+        private $numberTopic;
 
       /*Hydrate : instance l'objet avec les donnnées de la BDD  - */
       public function __construct($data){         
@@ -52,6 +53,24 @@
             return $this;
     }
 
-    
+    /**
+     * Get the value of numberTopic
+     */ 
+    public function getNumberTopic()
+    {
+            return $this->numberTopic;
+    }
+
+    /**
+     * Set the value of numberTopic
+     *
+     * @return  self
+     */ 
+    public function setNumberTopic($numberTopic)
+    {
+            $this->numberTopic = $numberTopic;
+
+            return $this;
+    }
         
     }

@@ -155,6 +155,14 @@
 
                 return $this;
         }
+
+         /**
+         * Perform checking role user
+         */
+        public function hasRole($roleUser){
+                return $this->roleUser == $roleUser;
+            }
+
          /* Getter and Setter of datePost */
          public function getDatePost(){
             $formattedDate = $this-datePost->format("d/m/Y, H:i:s");
@@ -166,7 +174,15 @@
             return $this;
         }
 
-        public function __toString(){
-            return $this->namePost;
+        
+    
+            /**
+             * Méthode toString de la classe
+             */
+            public function __toString(){
+                return $this->pseudoUser . "";
+            }
+
+        
     }
-    }
+?>

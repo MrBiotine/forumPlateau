@@ -40,8 +40,8 @@
                         }
                         else{
                             ?>
-                            <a href="./view/security/login.php">Connexion</a>
-                            <a href="/security/register.html">Inscription</a>
+                            <a href="index.php?ctrl=security&action=goToSignIn">Connexion</a>
+                            <a href="index.php?ctrl=security&action=goToSignUp">Inscription</a>
                             <a href="index.php?ctrl=forum&action=listCategorys">la liste des catégories</a>
                             <a href="index.php?ctrl=home&action=listUsers">liste des users</a>
                         <?php

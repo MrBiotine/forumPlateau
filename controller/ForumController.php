@@ -174,7 +174,20 @@
                 "category_id" => $idCategory
             ]);
 
-            
+            /* Add the first post in the new topic */
+            if($idTopic && $postManager->add([
+                "textPost" => $textPost,
+                "user_id" => Session::getUser()->getId(),
+                "topic_id" => $idTopic
+            ])){
+                $session->addFlash("success", "Ajout du topic '$titre' réussi !");
+                $this->redirectTo("post", "listerPostsDansTopic", "$idTopic");
+            }
+            else{
+                $session->addFlash("error", "Échec de l'ajout du topic !");
+                $this->redirectTo("topic", "allerPageAjoutTopicDansCategorie", "$idCategorie");
+            }
+
 
 
 

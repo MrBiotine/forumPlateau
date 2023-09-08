@@ -45,7 +45,7 @@
          *  find the password associated with the email
          */
         public function findPassWord($emailUser){
-            $sql = "SELECT passwordUser
+            $sql = "SELECT passWordUser
                         FROM " . $this->tableName . " m
                         WHERE m.emailUser = :emailUser";
             return $this->getOneOrNullResult(

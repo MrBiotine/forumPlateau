@@ -38,30 +38,30 @@
             if(isset($_POST["submitInscription"])){
 
                 /* Filter datas send by the form 'signup.php' with post method */
-                $pseudo = filter_input(INPUT_POST, 'pseudoUser', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-                $email = filter_input(INPUT_POST, 'emailUser', FILTER_SANITIZE_EMAIL);
-                $passWord = filter_input(INPUT_POST, 'passWorUser', FILTER_SANITIZE_SPECIAL_CHARS);
-                $passWordBis = filter_input(INPUT_POST, 'passWordConfirmed', FILTER_SANITIZE_SPECIAL_CHARS);
+                $pseudoUser = filter_input(INPUT_POST, 'pseudoUser', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                $emailUser = filter_input(INPUT_POST, 'emailUser', FILTER_SANITIZE_EMAIL);
+                $passWordUser = filter_input(INPUT_POST, 'passWordUser', FILTER_SANITIZE_SPECIAL_CHARS);
+                $passWordConfirmed = filter_input(INPUT_POST, 'passWordConfirmed', FILTER_SANITIZE_SPECIAL_CHARS);
                 
                 /* if filter is successful */
-               // if($pseudo && $email && $passWord && $passWordBis){
+                if($pseudoUser && $emailUser && $passWordUser && $passWordConfirmed){
 
-                    /* if email doesen't exist  */
-                    if(!$userManager->findEmail($email)){
+                    /* if emailUser doesen't exist  */
+                    if(!$userManager->findEmail($emailUser)){
                         
-                        /* if pseudo doesen't exist */
-                        if(!$userManager->findPseudo($pseudo)){
+                        /* if pseudoUser doesen't exist */
+                        if(!$userManager->findPseudo($pseudoUser)){
                             
-                            /* if $passWord and $passWordconfirmed are identical */
-                            if($passWord == $passWordBis){
+                            /* if $passWordUser and $passWordconfirmed are identical */
+                            if($passWordUser == $passWordConfirmed){
                                 
                                 /* password is hashed */
-                                $passWordHash = password_hash($passWord, PASSWORD_DEFAULT);
+                                $passWordHash = password_hash($passWordUser, PASSWORD_DEFAULT);
 
                                 /* user is added in db */
                                 if($userManager->add([
-                                    "pseudoUser" => $pseudo,
-                                    "emailUser" => $email,
+                                    "pseudoUser" => $pseudoUser,
+                                    "emailUser" => $emailUser,
                                     "passWordUser" => $passWordHash,
                                     "roleUser" => "ROLE_USER"
                                 ])){
@@ -87,11 +87,11 @@
                         $session->addFlash("error", "L'email saisit existe déjà ! Saisissez-en un autre !");
                         $this->redirectTo("security", "goToSignUp");
                     }
-               // }
-               // else{
-               //     $session->addFlash("error", "Échec de l'inscription ! Filter fail");
-               //     $this->redirectTo("security", "goToSignUp");
-               // }
+                }
+                else{
+                    $session->addFlash("error", "Échec de l'inscription ! Filter fail");
+                    $this->redirectTo("security", "goToSignUp");
+                }
             }
             else{
                 $session->addFlash("error", "Échec de l'inscription ! form fail !");
@@ -117,25 +117,26 @@
             $session = new Session();
 
             /* if the form send datas */
-            if(isset($_POST["submitsignIn"])){
+            if(isset($_POST["submitSignIn"])){
                 
                 /* Filter datas send by the form 'signin.php' with post method */
-                $email = filter_input(INPUT_POST, "emailUser", FILTER_SANITIZE_EMAIL);
-                $passWord = filter_input(INPUT_POST, "passWordUser", FILTER_SANITIZE_SPECIAL_CHARS);
+                $emailUser = filter_input(INPUT_POST, "emailUser", FILTER_SANITIZE_EMAIL);
+                $passWordUser = filter_input(INPUT_POST, "passWordUser", FILTER_SANITIZE_SPECIAL_CHARS);
 
                 /* if filter is a success */
-                if($email && $passWord){
-                    $passWordBdd = $userManager->findPassWord($email); // Find the password associated with the email address
+                if($emailUser && $passWordUser){
+                    $passWordBdd = $userManager->findPassWord($emailUser); // Find the password associated with the emailUser address
                     
                     /* if password exist */
                     if($passWordBdd){
-                        $hash = $passWordBdd->getpassWord(); // get the hash stored in the database
-                        $user = $userManager->findEmail($email); // get the user with his email
+                        $hash = $passWordBdd->getPassWordUser(); // get the hash stored in the database
+                        $user = $userManager->findEmail($emailUser); // get the user with his email                       
                         
-                        /* if $passWord and $hash are identical */
-                        if(password_verify($passWord, $hash)){
+                                                   
+                        /* if $passWordUser and $hash are identical */
+                        if(password_verify($passWordUser, $hash)){
                             Session::setUser($user); // user is stored in the current session
-                            $session->addFlash("success", "Connexion réussie ! Bienvenue " . Session::getUser()->getPseudoUser()); // Display the user pseudo
+                            Session::addFlash("success", "Connexion réussie ! Bienvenue " . Session::getUser()->getPseudoUser()); // Display the user pseudo
                             return [
                                 "view" => VIEW_DIR . "home.php"
                             ];
@@ -156,8 +157,30 @@
                 }
             }
             else{
-                $session->addFlash("error", "L'email ou le mot de passe n'est pas bon ! Réessayez");
+                $session->addFlash("error", "L'email ou le mot de passe est invalide ! Réessayez ");
                 $this->redirectTo("security", "goToSignIn");
+            }
+        }
+
+        /**
+         * perform Logout
+         */
+        public function logOut(){
+            /* the required objects are instantiated */
+            $session = new Session();
+
+            /* destroy definitely the session then logout the user */
+            if(session_unset() && session_destroy()){
+                $session->addFlash("success", "Déconnexion réussi !");
+                return [
+                    "view" => VIEW_DIR . "home.php"
+                ];
+            }
+            else{
+                $session->addFlash("error", "Échec de la déconnexion !");
+                return [
+                    "view" => VIEW_DIR . "home.php"
+                ];
             }
         }
     }

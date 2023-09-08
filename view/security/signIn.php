@@ -11,7 +11,7 @@ if(!App\Session::getUser()){
             <label for="passWordUser">Mot de passe :</label>
             <input type="password" name="passWordUser" id="passWordUser" required>
         </div>
-        <input type="submit" value="SE CONNECTER" name="submitConnexion" class="add-button">
+        <input type="submit" value="SE CONNECTER" name="submitSignIn" id="form-button">
     </form>
 <?php
 }

@@ -132,6 +132,14 @@
             ];
         }
 
+        public function addTopic() {
+            /* On utilise les managers nécessaires */
+            $topicManager = new TopicManager();
+            $postManager = new PostManager();
+            $session = new Session();
+
+        }
+
 
         
 

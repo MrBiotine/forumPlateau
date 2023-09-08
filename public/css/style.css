@@ -10,6 +10,8 @@
     --color-dred: rgb(88, 6, 18);
     --color-dblue: rgb(40, 25, 121);
     --color-lblue: rgb(132, 131, 216);
+    --color-lgray: rgb(150, 150, 160);
+    --color-dgray: rgb(70, 70, 75);
 }
 
 /* COMMON */
@@ -116,6 +118,7 @@ form input[type="number"] {
 /* Style pour le bouton Ajouter */
 
 #form-button {
+    margin-top: 5px;
     padding: 10px 15px;
     background-color: var(--color-lblue);
     border: none;
@@ -127,7 +130,8 @@ form input[type="number"] {
 }
 
 #form-button:hover {
-    background-color: var(--color-dred);
+    color: var(--color-lgray);
+    background-color: var(--color-dblue);
 }
 
 #form-button:active {

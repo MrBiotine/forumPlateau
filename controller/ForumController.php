@@ -132,11 +132,51 @@
             ];
         }
 
+         /**
+         * Redirect to page addTopic.php
+         */
+        public function goToPageAddTopic(){
+            /* the required objects are instantiated */
+            $categorieManager = new CategorieManager();
+            return [
+                "view" => VIEW_DIR . "Forum/addTopic.php",
+                "data" => ["categorys" => $categoryManager->listCategoryWithNumberTopic(["nameCategory","ASC"])] 
+            ];
+        }
+
+        /*To add a topic inside a category*/
         public function addTopic() {
-            /* On utilise les managers nécessaires */
+            /* the required objects are instantiated */
             $topicManager = new TopicManager();
             $postManager = new PostManager();
             $session = new Session();
+
+            /* If the form has a faillure*/
+            if(!isset($_POST["submitTopicInCategory"])){
+                $session->addFlash("error", "Echec du formulaire !");
+                $this->redirectTo("security", "goToSignUp");
+            }
+
+            /*Filter the datas send by the form*/
+            $nameCategory = filter_input(INPUT_POST, "nameCategory", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $textPost = filter_input(INPUT_POST, "textPost", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $idCategory = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+            /*check if the filter fail*/
+            if(!$nameCategory || !$textPost || !$idCategory){
+                $session->addFlash("error", "Données non valides !");
+                $this->redirectTo("home");
+            }
+             /* Add a topic and get his id */
+             $idTopic = $topicManager->add([
+                "nameCategory" => $nameCategory,
+                "user_id" => Session::getUser()->getId(),
+                "category_id" => $idCategory
+            ]);
+
+            
+
+
 
         }
 

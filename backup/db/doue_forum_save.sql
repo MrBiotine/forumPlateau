@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS `category` (
   PRIMARY KEY (`id_category`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Listage des données de la table doue_forum.category : ~6 rows (environ)
+-- Listage des données de la table doue_forum.category : ~7 rows (environ)
 /*!40000 ALTER TABLE `category` DISABLE KEYS */;
 INSERT INTO `category` (`id_category`, `nameCategory`) VALUES
 	(1, 'Bonheur'),
@@ -81,21 +81,24 @@ INSERT INTO `topic` (`id_topic`, `dateTopic`, `nameTopic`, `isLockTopic`, `categ
 CREATE TABLE IF NOT EXISTS `user` (
   `id_user` int(11) NOT NULL AUTO_INCREMENT,
   `pseudoUser` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `mailUser` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `passwordUser` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `emailUser` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `passWordUser` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `registrationUser` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `roleUser` json DEFAULT NULL,
+  `roleUser` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `isBanUser` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_user`),
-  UNIQUE KEY `mailUser` (`mailUser`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  UNIQUE KEY `mailUser` (`emailUser`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- Listage des données de la table doue_forum.user : ~3 rows (environ)
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` (`id_user`, `pseudoUser`, `mailUser`, `passwordUser`, `registrationUser`, `roleUser`, `isBanUser`) VALUES
+INSERT INTO `user` (`id_user`, `pseudoUser`, `emailUser`, `passWordUser`, `registrationUser`, `roleUser`, `isBanUser`) VALUES
 	(1, 'leonMoise', 'user1@domain1.com', 'tftbutjukukkkuykykyuky', '2023-09-04 14:54:53', NULL, 0),
 	(2, 'chardonne', 'user2@domain2.com', 'tftbutj1256786ykykyuky', '2023-09-04 14:54:53', NULL, 0),
-	(3, 'gideon', 'user3@domain3.com', 'tftbutj1256786ykykyuky', '2023-09-04 14:54:53', NULL, 0);
+	(3, 'gideon', 'user3@domain3.com', 'tftbutj1256786ykykyuky', '2023-09-04 14:54:53', NULL, 0),
+	(4, 'mom', 'mom75@momo.com', '$2y$10$0juhT0tNMq9QUPSyGOzeGuj7UkDQfymtYd4fU9t23kmZ8c7y2UMzi', '2023-09-08 08:53:35', 'ROLE_USER', 0),
+	(6, 'supervisor', 'admin@forum-cda.com', '$2y$10$oOILDuKR2gTa5vpcR1PDjOFIw.DVGMbGTykZGLsKrhKFUbMtc.iJq', '2023-09-08 09:09:07', 'ROLE_USER', 0),
+	(7, 'momo', 'momo@momo.com', '$2y$10$ZpK.tI8I1J7kEsyfqv06gehtdOef7kZ.Eu9XRmjf1iqDQDCWb/342', '2023-09-08 09:49:08', 'ROLE_USER', 0);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

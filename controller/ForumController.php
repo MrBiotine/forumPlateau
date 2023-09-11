@@ -133,14 +133,28 @@
         }
 
          /**
-         * Redirect to page addTopic.php
+         * Redirect to page addformTopic.php
          */
         public function goToPageAddTopic(){
             /* the required objects are instantiated */
             $categorieManager = new CategorieManager();
+
+            /* check if the user is ban */
+            if($session->getUser()->hasRole("ROLE_BAN")){
+                Session::addFlash("error", "Acces refusé. Raison: ".Session::getUser()->getPseudoUser()." est banni");
+                $this->redirectTo("forum");
+            }
+
+            //filter the data from url via the metthod GET
+            $idCategory = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            if(!$idCategory){
+                Session::addFlash("error", "Données invalide");
+                $this->redirectTo("forum");
+            }
+
             return [
-                "view" => VIEW_DIR . "Forum/addTopic.php",
-                "data" => ["categorys" => $categoryManager->listCategoryWithNumberTopic(["nameCategory","ASC"])] 
+                "view" => VIEW_DIR . "forum/topic/addFormTopic.php",
+                "data" => ["category" => $categoryManager->findOneById($id)] 
             ];
         }
 
@@ -180,12 +194,12 @@
                 "user_id" => Session::getUser()->getId(),
                 "topic_id" => $idTopic
             ])){
-                $session->addFlash("success", "Ajout du topic '$titre' réussi !");
+                $session->addFlash("success", "Ajout du topic '$nameTopic' réussi !");
                 $this->redirectTo("post", "listerPostsDansTopic", "$idTopic");
             }
             else{
                 $session->addFlash("error", "Échec de l'ajout du topic !");
-                $this->redirectTo("topic", "allerPageAjoutTopicDansCategorie", "$idCategorie");
+                $this->redirectTo("forum", "goToPageAddTopic", "$idCategorie");
             }
 
 

@@ -146,7 +146,7 @@
             }
 
             //filter the data from url via the metthod GET
-            $idCategory = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             if(!$idCategory){
                 Session::addFlash("error", "Données invalide");
                 $this->redirectTo("forum");

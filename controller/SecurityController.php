@@ -94,7 +94,7 @@
                 }
             }
             else{
-                $session->addFlash("error", "Échec de l'inscription ! form fail !");
+                $session->addFlash("error", "Échec de l'inscription ! Form fail !");
                 $this->redirectTo("security", "goToSignUp");
             }
         }

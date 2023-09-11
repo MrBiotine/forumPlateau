@@ -23,7 +23,7 @@
                     //instance du manager
                     $man = new $FQCName();
                     //appel de la méthode findOneById du bon manager en fournissant l'id de l'entité référenciée (de l'enregistrement de la table 'truc' qui a pour id $value)
-                    //value qui contenait un id contient maintenant un objet =>  instance d'une entité venant du modèle Entity
+                    //value qui contenait un id contient maintenant un objet =>  instance d'une entité venant du modèle model/entities
                     $value = $man->findOneById($value);
                 }
                 //fabrication du nom du setter à appeler (ex: setMarque)
@@ -33,7 +33,7 @@
                 //-Autre : "title" => "setTitle"
                 //si ce setter existe 
                 $method = "set".ucfirst($fieldArray[0]);
-                //alors on l'appelel en lui passant $value comme argument
+                //alors on l'appelle en lui passant $value comme argument
                 // 2 cas possible:
                 // -FK : $value contient un objet
                 // -Pk ou autre : $value contient une valeur

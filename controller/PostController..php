@@ -14,31 +14,27 @@
         /**
          * Lists the posts in a topic
          */
-        public function listerPostsDansTopic(){
+        public function listPosts(){
             /* the required objects are instantiated */
             $topicManager = new TopicManager();
             $postManager = new PostManager();
 
-            /* Filter  external data
-  */
+            /* Filter  external data*/
             $idTopic = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             
-            /* Si le filtrage fonctionne */
+            /* Check if the filter fail */
             if(!$idTopic){
-
-
-                return [
-                    "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
+                Session::addFlash("error","Données invalides")              
+                $this->redirectTo("forum","listTopics");
+            }
+            return [
+                    "view" => VIEW_DIR . "forum/Post/listPosts.php",
                     "data" => [
-                        "posts" => $postManager->findPostinTopic($idTopic),
-                        "ancien" => $postManager->findOldestPost($idTopic),
+                        "posts" => $postManager->findListByIdDep($idTopic, "topic", ["datePost", "DESC"]),
+                        "old" => $postManager->findOldestPost($idTopic),
                         "topic" => $topicManager->findOneById($idTopic)
                     ]
                 ];
-            }
-            else{
-                $this->redirectTo("topic");
-            }
         }
 
     }

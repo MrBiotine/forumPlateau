@@ -53,17 +53,23 @@
                         if(!$userManager->findPseudo($pseudoUser)){
                             
                             /* if $passWordUser and $passWordconfirmed are identical */
-                            if($passWordUser == $passWordConfirmed){
+                            if($passWordUser == $passWordConfirmed && (strlen($passWordUser)>12)){
                                 
-                                /* password is hashed */
+                                /* password is hashed  - le hashage est un mécanisme unudirectionnel et irréversible. ON NE DEHASH PAS UN PASSWORD !!*/
+                                //passbord_hash demande l'algo de hash a utilisé - ARGON2I et BCRYPT sont recommandés
                                 $passWordHash = password_hash($passWordUser, PASSWORD_DEFAULT);
+                                //password_default utilise BCRYPT comme algo de hash pae défault
+                                //BCRYPT est en algo fort comme ARGON2I
+                                //Il crée un empreinte numérique composé de l'algo utilisé, d'un COST, d'un SALT et du passWord hashé
+                                //Le SALT est une chaine aleatoire hashé qui sera concaténé au passWord hashé
+                                //augmente grandement la difficulté d'un pirate de trouver le mot de passe à partir du hash
 
                                 /* user is added in db */
                                 if($userManager->add([
                                     "pseudoUser" => $pseudoUser,
                                     "emailUser" => $emailUser,
                                     "passWordUser" => $passWordHash,
-                                    "roleUser" => "ROLE_USER"
+                                    "roleUser" => json_encode(["ROLE_USER"]) 
                                 ])){
                                     $session->addFlash("success", "Inscription réussi ! Connectez-vous !");
                                     $this->redirectTo("security", "goToSignIn");
@@ -135,11 +141,20 @@
                                                    
                         /* if $passWordUser and $hash are identical */
                         if(password_verify($passWordUser, $hash)){
-                            Session::setUser($user); // user is stored in the current session
-                            Session::addFlash("success", "Connexion réussie ! Bienvenue " . Session::getUser()->getPseudoUser()); // Display the user pseudo
-                            return [
-                                "view" => VIEW_DIR . "home.php"
-                            ];
+                            //PASSWORD_VERIFY VA COMPARER 2 CHAINES DE CARACTERES HASHEES !!
+
+                            //check if the user is not ban
+                            if($user->getIsBanUser() == 0){
+                                Session::setUser($user); // then user is stored in the current session
+                                Session::addFlash("success", "Connexion réussie ! Bienvenue " . Session::getUser()->getPseudoUser()); // Display the user pseudo
+                                $this->redirectTo("forum");
+                            }else{
+                                $session->addFlash("error", "Acces refusé - vous êtes Banni !");
+                                return [
+                                    "view" => VIEW_DIR."home.php"
+                                ];
+                            }
+                            
                         }
                         else{
                             $session->addFlash("error", "L'email ou le mot de passe n'est pas bon ! Réessayez");

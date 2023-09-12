@@ -29,7 +29,7 @@
                 //fabrication du nom du setter à appeler (ex: setMarque)
                 //3 cas : (pour l'entité "truc")
                 //-PK : "id" => "setId"
-                //-FK : "truc" => "setTtruc"
+                //-FK : "truc" => "setTruc"
                 //-Autre : "title" => "setTitle"
                 //si ce setter existe 
                 $method = "set".ucfirst($fieldArray[0]);

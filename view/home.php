@@ -1,3 +1,8 @@
+<?php
+//to debug
+var_dump($_SESSION["user"]);
+?>
+
 <h1>BIENVENUE SUR LE FORUM</h1>
 
 <p>Collectons et commenttons ensembles les plus célèbres pensées positives émises par de nombreux personnages célébres dans l'histoire de l'Humanité.</p>

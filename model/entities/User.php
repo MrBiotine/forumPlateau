@@ -4,9 +4,9 @@
     use App\Entity;  //indique le chemein virtuel de la classe utlisé
 
     final class User extends Entity {
-        private $id;              //primary key id_user
-        private $mailUser;
-        private $pseudoUser;
+        private $id;                  //primary key id_user
+        private $pseudoUser;              
+        private $emailUser;        
         private $passWordUser;
         private $registrationUser;            
         private $roleUser;
@@ -37,21 +37,21 @@
         }
 
          /**
-         * Get the value of mailUser
+         * Get the value of emailUser
          */ 
-        public function getMailUser()
+        public function getEmailUser()
         {
-                return $this->mailUser;
+                return $this->emailUser;
         }
 
                /**
-         * Set the value of mailUser
+         * Set the value of emailUser
          *
          * @return  self
          */ 
-        public function setMailUser($mailUser)
+        public function setEmailUser($emailUser)
         {
-                $this->mailUser = $mailUser;
+                $this->mailUser = $emailUser;
 
                 return $this;
         }
@@ -129,12 +129,18 @@
          *
          * @return  self
          */ 
-        public function setRoleUser($roleUser)
-        {
-                $this->roleUser = $roleUser;
-
-                return $this;
-        }
+        // public function setRoleUser($role)
+        // {
+        //         //we get a JSON
+        //         $this->roleUser = json_decode($role);
+        //        
+        //         //if there is no assigned role, a default role will be assigned
+        //         if(empty($this->$role)){
+        //                 $this->roleUser[] = "ROLE_USER";
+        //         }
+        //
+        //         return $this;
+        // }
 
          /**
          * Get the value of isBanUser
@@ -159,9 +165,14 @@
          /**
          * Perform checking role user
          */
-        public function hasRole($roleUser){
-                return $this->roleUser == $roleUser;
-            }
+        //public function hasRole($roleUser){
+        //        return $this->roleUser == $roleUser;
+        //}
+
+        public function hasRole($role){
+                //si dans le tableau JSON on trouve un role qui corresponde au role en paramètre, on retourne le role
+                //return in_array($role, $this->getRoleUser());
+        }
 
          /* Getter and Setter of datePost */
          public function getDatePost(){

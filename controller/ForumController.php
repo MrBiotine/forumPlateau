@@ -135,7 +135,7 @@
          /**
          * Redirect to page addformTopic.php
          */
-        public function goToPageAddTopic(){
+        public function addFormTopic(){
             /* the required objects are instantiated */
             $categorieManager = new CategorieManager();
 
@@ -195,11 +195,11 @@
                 "topic_id" => $idTopic
             ])){
                 $session->addFlash("success", "Ajout du topic '$nameTopic' réussi !");
-                $this->redirectTo("post", "listerPostsDansTopic", "$idTopic");
+                $this->redirectTo("post", "listPosts", "$idTopic");
             }
             else{
                 $session->addFlash("error", "Échec de l'ajout du topic !");
-                $this->redirectTo("forum", "goToPageAddTopic", "$idCategorie");
+                $this->redirectTo("forum", "addFormTopic", "$idCategorie");
             }
 
 

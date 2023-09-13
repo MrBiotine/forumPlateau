@@ -32,8 +32,7 @@
         public function signUp(){
             /* the required objects are instantiated */
             $userManager = new UserManager();
-            $session = new Session();
-
+            
             /* if the form send datas */
             if(isset($_POST["submitInscription"])){
 
@@ -71,36 +70,36 @@
                                     "passWordUser" => $passWordHash,
                                     "roleUser" => json_encode(["ROLE_USER"]) 
                                 ])){
-                                    $session->addFlash("success", "Inscription réussi ! Connectez-vous !");
+                                    Session::addFlash("success", "Inscription réussi ! Connectez-vous !");
                                     $this->redirectTo("security", "goToSignIn");
                                 }
                                 else{
-                                    $session->addFlash("error", "Échec de l'inscription ! insertion fail !");
+                                    Session::addFlash("error", "Échec de l'inscription ! insertion fail !");
                                     $this->redirectTo("security", "goToSignUp");
                                 }
                             }
                             else{
-                                $session->addFlash("error", "Les mots de passe ne sont pas identiques ! Veuillez les saisirs à nouveau !");
+                                Session::addFlash("error", "Les mots de passe ne sont pas identiques ! Veuillez les saisirs à nouveau !");
                                 $this->redirectTo("security", "goToSignUp");
                             }
                         }
                         else{
-                            $session->addFlash("error", "Le pseudo saisit existe déjà ! Saisissez-en un autre !");
+                            Session::addFlash("error", "Le pseudo saisit existe déjà ! Saisissez-en un autre !");
                             $this->redirectTo("security", "goToSignUp");
                         }
                     }
                     else{
-                        $session->addFlash("error", "L'email saisit existe déjà ! Saisissez-en un autre !");
+                        Session::addFlash("error", "L'email saisit existe déjà ! Saisissez-en un autre !");
                         $this->redirectTo("security", "goToSignUp");
                     }
                 }
                 else{
-                    $session->addFlash("error", "Échec de l'inscription ! Filter fail");
+                    Session::addFlash("error", "Échec de l'inscription ! Filter fail");
                     $this->redirectTo("security", "goToSignUp");
                 }
             }
             else{
-                $session->addFlash("error", "Échec de l'inscription ! Form fail !");
+                Session::addFlash("error", "Échec de l'inscription ! Form fail !");
                 $this->redirectTo("security", "goToSignUp");
             }
         }
@@ -119,8 +118,7 @@
          */
         public function signIn(){
             /* the required objects are instantiated */
-            $userManager = new userManager();
-            $session = new Session();
+            $userManager = new userManager();            
 
             /* if the form send datas */
             if(isset($_POST["submitSignIn"])){
@@ -149,7 +147,7 @@
                                 Session::addFlash("success", "Connexion réussie ! Bienvenue " . Session::getUser()->getPseudoUser()); // Display the user pseudo
                                 $this->redirectTo("forum");
                             }else{
-                                $session->addFlash("error", "Acces refusé - vous êtes Banni !");
+                                Session::addFlash("error", "Acces refusé - vous êtes Banni !");
                                 return [
                                     "view" => VIEW_DIR."home.php"
                                 ];
@@ -157,22 +155,22 @@
                             
                         }
                         else{
-                            $session->addFlash("error", "L'email ou le mot de passe n'est pas bon ! Réessayez");
+                            Session::addFlash("error", "L'email ou le mot de passe n'est pas bon ! Réessayez");
                             $this->redirectTo("security", "goToSignIn");
                         }
                     }
                     else{
-                        $session->addFlash("error", "Échec de la connexion ! Réessayez");
+                        Session::addFlash("error", "Échec de la connexion ! Réessayez");
                         $this->redirectTo("security", "goToSignIn");
                     }
                 }
                 else{
-                    $session->addFlash("error", "Échec de la connexion ! Réessayez");
+                    Session::addFlash("error", "Échec de la connexion ! Réessayez");
                     $this->redirectTo("security", "goToSignIn");
                 }
             }
             else{
-                $session->addFlash("error", "L'email ou le mot de passe est invalide ! Réessayez ");
+                Session::addFlash("error", "L'email ou le mot de passe est invalide ! Réessayez ");
                 $this->redirectTo("security", "goToSignIn");
             }
         }
@@ -180,19 +178,17 @@
         /**
          * perform Logout
          */
-        public function logOut(){
-            /* the required objects are instantiated */
-            $session = new Session();
+        public function logOut(){            
 
             /* destroy definitely the session then logout the user */
             if(session_unset() && session_destroy()){
-                $session->addFlash("success", "Déconnexion réussi !");
+                Session::addFlash("success", "Déconnexion réussi !");
                 return [
                     "view" => VIEW_DIR . "home.php"
                 ];
             }
             else{
-                $session->addFlash("error", "Échec de la déconnexion !");
+                Session::addFlash("error", "Échec de la déconnexion !");
                 return [
                     "view" => VIEW_DIR . "home.php"
                 ];

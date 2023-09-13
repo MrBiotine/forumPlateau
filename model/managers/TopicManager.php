@@ -24,7 +24,7 @@
             $requete = "SELECT *, (SELECT COUNT(post.id_post)
                                 FROM post
                                 WHERE post." . $this->tableName . "_id = id_" . $this->tableName . "
-                                ) AS numberPosts
+                                ) AS nbPosts
                                 
                     FROM " . $this->tableName . " t
                     WHERE t.categorie_id = :id
@@ -54,7 +54,7 @@
             $requete = "SELECT *, (SELECT COUNT(post.id_post)
                                 FROM post
                                 WHERE post." . $this->tableName . "_id = id_" . $this->tableName . "
-                                ) AS numberPosts
+                                ) AS nbPosts
                     FROM " . $this->tableName . " a
                     ". $orderQuery;
             return $this->getMultipleResults(
@@ -89,15 +89,15 @@
         public function findTopicsUser($id, $order = null){
             $orderQuery = ($order) ? "ORDER BY " . $order[0] . " " . $order[1] : "";
             
-            $requete = "SELECT *, (SELECT COUNT(post.id_post)
+            $sql = "SELECT *, (SELECT COUNT(post.id_post)
                                 FROM post
                                 WHERE post." . $this->tableName . "_id = id_" . $this->tableName . "
-                                ) AS numberPosts
+                                ) AS nbPosts
                     FROM " . $this->tableName . "
                     WHERE " . $this->tableName .".user_id = :id
                     ". $orderQuery;
             return $this->getMultipleResults(
-                DAO::select($requete, ["id" => $id]),
+                DAO::select($sql, ["id" => $id]),
                 $this->className
             );
         }

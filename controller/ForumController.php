@@ -91,18 +91,37 @@
             ];
         }
 
-        public function delCategory($id){               // Function to delete a category
+        public function delCategory(){               // Function to delete a category
 
             $categoryManager = new CategoryManager();
-            $session = new Session();                   //instantiate a new session to use notification 
+            $topicManager = new TopicManager();
+            $postManager = new PostManager();
+            // filter data received from GET
+            $idCategory = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-            return [                                    // The function name must match the target file in order to access it.
+            //check if filter fail
+            if(!$idCategory){
+                Session::addFlash('error',"Données invalide - le filtrage a échouée !");
+                $this->redirectTo("forum");
+            }
 
-                "view" => VIEW_DIR."forum/listCategorys.php",  // redirect to the page displaying the categorys
-                $session->addFlash('success',"Supprimé avec succès"),// Display the notification
-                
-                "data" => [$categoryManager->delete($id), "categorys" => $categoryManager->findAll(["name", "ASC"])]           
-            ];
+            //if user is not the admin, the action is canceled
+            if(!Session::isAdmin()){
+                Session::addFlash('error',"Action refusé - vous n'avez pas le niveau requis de privilège");
+                $this->redirectTo("forum");
+            }
+            
+            $nameCategory = $categorieManager->findOneById($idCategory)->getNameCategory();
+
+            /* Delete on cascade : delete all the posts linked with the category, then delete all the topics linked with the category, and finally the category itself */
+            if($postManager->deleteAllPostByCategory($idCategory) && $topicManager->deleteAllTopicFromCategory($idCategory) && $categoryManager->delete($idCategory)){
+                Session::addFlash("success", "Suppression de la catégorie '$nameCategory' réussi !");
+                $this->redirectTo("forum");
+            }
+            else{
+                Session::addFlash("error", "Échec de la suppression !");
+                $this->redirectTo("forum");
+                }
         }
 
         

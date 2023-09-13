@@ -179,7 +179,11 @@
                 Session::addFlash("error", "Modification impossible - le sujet est verouillé !");
                 $this->redirectTo("forum");
             }
-
+            /*check if the user is not the post author */
+            if(!(Session::getUser()->getId() == $postManager->findUserPost($idPost))){
+                Session::addFlash("error", "Vous n'êtes pas autoriser à modifier le post !");
+                $this->redirectTo("post", "listPosts", "$idTopic");
+            }
              /* Finally the post is added */
              if($postManager->add([
                 "textPost" => $textPost,

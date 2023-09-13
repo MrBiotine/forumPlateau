@@ -37,6 +37,20 @@
             return (isset($_SESSION['user'])) ? $_SESSION['user'] : false;
         }
 
+        public static function isBan(){
+            if(self::getUser() && self::getUser()->getIsBanUser() == 1){
+                return true;
+            }
+            return false;
+        }
+
+        public static function isUser(){
+            if(self::getUser() && self::getUser()->getIsBanUser() == 0){
+                return true;
+            }
+            return false;
+        }
+
         public static function isAdmin(){
             if(self::getUser() && self::getUser()->getRoleUser() == 'ROLE_ADMIN'){
                 return true;

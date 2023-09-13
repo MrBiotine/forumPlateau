@@ -113,9 +113,9 @@
         /**
          * update a user role
          */
-        public function modificationRole($id, $role){
+        public function updateRole($id, $role){
             $requete = "UPDATE " . $this->tableName . "
-                        SET role = :role
+                        SET roleUser = :role
                         WHERE id_" . $this->tableName . " = :id";
             return DAO::update($requete, ["id" => $id, "role" => $role]);
         }

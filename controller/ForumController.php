@@ -91,7 +91,7 @@
             ];
         }
 
-        public function delCategory(){               // Function to delete a category
+        public function deleteCategory(){               // Function to delete a category
 
             $categoryManager = new CategoryManager();
             $topicManager = new TopicManager();
@@ -156,17 +156,17 @@
          */
         public function addFormTopic(){
             /* the required objects are instantiated */
-            $categorieManager = new CategorieManager();
+            $categoryManager = new CategoryManager();
 
             /* check if the user is ban */
-            if($session->getUser()->hasRole("ROLE_BAN")){
+            if(Session::isBan()){
                 Session::addFlash("error", "Acces refusé. Raison: ".Session::getUser()->getPseudoUser()." est banni");
                 $this->redirectTo("forum");
             }
 
             //filter the data from url via the metthod GET
             $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            if(!$idCategory){
+            if(!$id){
                 Session::addFlash("error", "Données invalide");
                 $this->redirectTo("forum");
             }
@@ -182,11 +182,11 @@
             /* the required objects are instantiated */
             $topicManager = new TopicManager();
             $postManager = new PostManager();
-            $session = new Session();
+            
 
             /* If the form has a faillure*/
             if(!isset($_POST["submitTopicInCategory"])){
-                $session->addFlash("error", "Echec du formulaire !");
+                Session::addFlash("error", "Echec du formulaire !");
                 $this->redirectTo("security", "goToSignUp");
             }
 
@@ -197,7 +197,7 @@
 
             /*check if the filter fail*/
             if(!$nameCategory || !$textPost || !$idCategory){
-                $session->addFlash("error", "Données non valides !");
+                Session::addFlash("error", "Données non valides !");
                 $this->redirectTo("home");
             }
              /* Add a topic and get his id */
@@ -225,6 +225,8 @@
 
 
         }
+
+        
 
 
         

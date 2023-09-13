@@ -1,5 +1,5 @@
 <?php
-if(App\Session::getUser() && !App\Session::getUser()->hasRole("ROLE_BAN")){
+if(App\Session::getUser() && !App\Session::isBan()){
 
     $category = $result["data"]["category"]
     ?>

@@ -51,7 +51,7 @@
          */ 
         public function setEmailUser($emailUser)
         {
-                $this->mailUser = $emailUser;
+                $this->emailUser = $emailUser;
 
                 return $this;
         }

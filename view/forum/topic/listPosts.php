@@ -22,14 +22,16 @@ if(App\Session::getUser() && !App\Session::isBan){
         ?>
                  <tbody>
                      <tr>
-                         <td><a href="index.php?ctrl=forum&action=listPosts&id=<?=$topic->getId()?>"><?=$topic->getNameTopic()?></a></td>
-                         <td><?=$topic->getDateTopic()?></td>
-                         <td><?=$topic->getUser()->getPseudoUser()?></td>
+                         <td><a href="index.php?ctrl=security&action=goProfil&id=<?=$post->getUser()->getId()?>"><?=$post->getUser()->getPseudoUser()?></a></td>
+                         <td><?=$post->getDatepost()?>
+                        
+                        </td>
+                         <td><?=$post->getUser()->getPseudoUser()?></td>
                          
                          <td>
                              <div class="">                                     
                                      
-                              <!-- Pour supprimer le topic sélectionné directement dans la liste -->
+                              <!-- Pour supprimer le post sélectionné directement dans la liste -->
                               <a href="index.php?ctrl=topic&action=delTopic&id=<?= $topic->getId() ?>"><i class="far fa-trash-alt"></i></a>                                     
                              </div> 
                          </td>

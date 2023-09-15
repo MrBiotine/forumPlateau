@@ -85,7 +85,7 @@
          */
         public function updatePassWord($id, $mdp){
             $requete = "UPDATE " . $this->tableName . "
-                        SET passwordUser = :mdp
+                        SET passWordUser = :mdp
                         WHERE id_" . $this->tableName ." = :id";
             return DAO::update($requete, ["id" => $id, "mdp" => $mdp]);
         }

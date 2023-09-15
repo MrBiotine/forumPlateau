@@ -7,22 +7,46 @@ if(App\Session::getUser() && !App\Session::isBan){
 ?>
 <--! displays view if a user is connected -->
 <h1><?=$category->getNameCategory() ?></h1>
-<p><mark><a href="index.php?ctrl=forum&action=editFormCategory&id=<?=$category->getId()?>">Ajouter un message</a></mark></p>
+<p><mark><a href="index.php?ctrl=forum&action=editFormCategory&id=<?=$topic->getId()?>">Ajouter un message</a></mark></p>
 <div class="">
     <table>
         <thead>
             <tr>
-                <th>A</th>
-                <th>Date de création</th>
                 <th>Auteur</th>
-                <th>Action</th>
+                <th>Sujet : <?=$topic->getNameTopic()?></th>
             </tr>
         </thead>
-
-</table>
-<?php
-}else{}
-?>
+        <?php
+        if($posts == true){                 
+            foreach($posts as $post){                                    
+        ?>
+                 <tbody>
+                     <tr>
+                         <td><a href="index.php?ctrl=forum&action=listPosts&id=<?=$topic->getId()?>"><?=$topic->getNameTopic()?></a></td>
+                         <td><?=$topic->getDateTopic()?></td>
+                         <td><?=$topic->getUser()->getPseudoUser()?></td>
+                         
+                         <td>
+                             <div class="">                                     
+                                     
+                              <!-- Pour supprimer le topic sélectionné directement dans la liste -->
+                              <a href="index.php?ctrl=topic&action=delTopic&id=<?= $topic->getId() ?>"><i class="far fa-trash-alt"></i></a>                                     
+                             </div> 
+                         </td>
+                     </tr>
+                 </tbody>
+            <?php
+                }
+            ?>
+    </table>
+</div>   
+            <?php
+            }else{// Sinon afficher ci dessous (Page Liste Topics sans Topics)
+               
+                echo "<p> Ce sujet n'a pas de message et ce n'est pas normal</p>";
+                 
+            } 
+            ?>
 
 
 

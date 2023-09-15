@@ -204,7 +204,7 @@
             ];
         }
         /*To update a pssWord*/
-        public function modificationMotDePasse(){
+        public function updatePassWord(){
             /* the required objects are instantiated */
             $userManager = new UserManager();         
             
@@ -223,12 +223,36 @@
                 Session::addFlash("error", "Pas de donées ! Le filtrage à échoué !");
                 $this->redirectTo("security");
             }
-            $hashedPassWord = Session::getUser()->getPassWord(); // get the user hashed passWord stored in database
+            $hashedPassWord = Session::getUser()->getPassWordUser(); // get the user hashed passWord stored in database
 
             /*check if get hashed passWord fail*/
             if(!$hashedPassWord){
                 Session::addFlash("error", "Erreur dans la session - donnée non récupérré");
                 $this->redirectTo("security");
+            }
+            /*check If oldPassword no matches hashed pssWord*/
+            if(!password_verify( $oldPassWord, $hashedPassWord )){
+                Session::addFlash("error", "Mot de passe incorrect - réessayer");
+                $this->redirectTo("security", "updateFormPassWord");
+            }
+
+            /*check if  $newPassWord and $passWordConfirmed are different*/
+            if($newPassWord != $passWordConfirmed){
+                Session::addFlash("error", "Les mots de passe ne sont pas identiques - réessayer");
+                $this->redirectTo("security", "updateFormPassWord");
+            }
+
+            /*The new passWord is hashed*/
+            $newHashPassWord = password_hash($newPassWord, PASSWORD_DEFAULT) ;
+            /*The new hashed passWord is inserted into db*/
+            if($userManager->updatePassWord(Session::getUser()->getId(), $newHashPassWord)){
+                Session::addFlash("success", "Modification du mot de passe réussi !");
+                Session::getUser()->setPassWordUser($newHashPassWord);
+                $this->redirectTo("security", "goProfil");
+            }
+            else{
+                Session::addFlash("error", "Échec de la modification du mot de passe !");
+                $this->redirectTo("security", "updateFormPassWord");
             }
         }
             

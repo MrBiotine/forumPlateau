@@ -194,6 +194,45 @@
                 ];
             }
         }
+
+         /**
+         * Access form to update the passWord
+         */
+        public function updateFormPassWord(){
+            return[
+                "view" => VIEW_DIR . "security/updateFormPassWord.php"
+            ];
+        }
+        /*To update a pssWord*/
+        public function modificationMotDePasse(){
+            /* the required objects are instantiated */
+            $userManager = new UserManager();         
+            
+            /* if the form fail */
+            if(!isset($_POST["submitUpdatePassWord"])){
+                Session::addFlash("error", "Pas de donées ! Le formulaire à échoué !");
+                $this->redirectTo("security");
+            }                
+            /* Filtering inputs */
+            $oldPassWord = filter_input(INPUT_POST, "oldPassWord", FILTER_SANITIZE_EMAIL);
+            $newPassWord = filter_input(INPUT_POST, "newPassWord", FILTER_SANITIZE_SPECIAL_CHARS);
+            $passWordConfirmed = filter_input(INPUT_POST, "passWordConfirmed", FILTER_SANITIZE_SPECIAL_CHARS);
+
+            /*ckeck if the filters fail*/
+            if(!$oldPassWord || !$newPassWord || !$passWordConfirmed){
+                Session::addFlash("error", "Pas de donées ! Le filtrage à échoué !");
+                $this->redirectTo("security");
+            }
+            $hashedPassWord = Session::getUser()->getPassWord(); // get the user hashed passWord stored in database
+
+            /*check if get hashed passWord fail*/
+            if(!$hashedPassWord){
+                Session::addFlash("error", "Erreur dans la session - donnée non récupérré");
+                $this->redirectTo("security");
+            }
+        }
+            
+
     }
 
 ?>

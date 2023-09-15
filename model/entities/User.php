@@ -123,6 +123,32 @@
         {
                 return $this->roleUser;
         }
+        /**
+        // * Get the value of role with JSON
+        // */
+        //public function getRole()
+        //{
+        //        return json_decode($this->role);
+        //}
+
+         /**
+         * Set the value of role with JSON
+         *
+         * @return  self
+         */
+        //public function setRole($role)
+        //{
+        //        $this->role = json_encode($role);
+        //
+        //        return $this;
+        //}
+
+                /*Get the role with JSON*/
+        //public function hasRole($role)
+        //{
+        //        $result = $this->getRole() == json_encode($role);
+        //        return $result;
+        //}
 
                /**
          * Set the value of roleUser

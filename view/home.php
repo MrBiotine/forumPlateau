@@ -1,6 +1,8 @@
 <?php
 //to debug
 var_dump($_SESSION["user"]);
+$title = $result["data"]["title"];
+$description = $result["data"]["description"];
 ?>
 
 <h1>BIENVENUE SUR LE FORUM</h1>

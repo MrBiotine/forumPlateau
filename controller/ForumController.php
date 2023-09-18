@@ -22,12 +22,17 @@
         public function listCategorys(){               // Display category list
             
             $categoryManager = new CategoryManager();   // Instantiate a new object to access the class's methods
+            //var for meta tag
+            $title = "Les Catégories";
+            $description = "liste positive des catégoties disponibleq"
 
             return [                                    // findAll() is a native function from framework
                 
                 "view" => VIEW_DIR."forum/listCategorys.php",
 
-                "data" => ["categorys" => $categoryManager->listCategoryWithNumberTopic(["nameCategory","ASC"])]                               
+                "data" => ["categorys" => $categoryManager->listCategoryWithNumberTopic(["nameCategory","ASC"]),
+                "title" => $title,
+                "description" => $description]                               
             ]; //Custom function which  select all records from 'category' table, sort of by ascending name and count the number topics inside
         }
 

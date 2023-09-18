@@ -124,8 +124,8 @@
                 return $this->roleUser;
         }
         /**
-        // * Get the value of role with JSON
-        // */
+         * Get the value of role with JSON
+         */
         //public function getRole()
         //{
         //        return json_decode($this->role);
@@ -198,7 +198,24 @@
         public function hasRole($role){
                 //si dans le tableau JSON on trouve un role qui corresponde au role en paramètre, on retourne le role
                 //return in_array($role, $this->getRoleUser());
+                $result = $this->getRole() == json_encode($role);
+
+                return $result;
+
         }
+
+        public function displayRole() {
+
+                if(in_array("ROLE_ADMIN", $this->getRole())) {
+    
+                return "admin";
+    
+                } else {
+                    return "user";
+    
+                }
+    
+            }
 
          /* Getter and Setter of datePost */
          public function getDatePost(){

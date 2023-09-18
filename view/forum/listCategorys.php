@@ -1,7 +1,8 @@
 <?php
 
 $categorys = $result["data"]['categorys'];
-    
+$title = $result["data"]["title"];
+$description = $result["data"]["description"];
 ?>
 
 <h1>Les Catégories</h1>

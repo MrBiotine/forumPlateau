@@ -13,13 +13,18 @@
 
         public function index(){
             
-           
+           $tiltle="Accueil";
+           $description="Forum inspiré positivement par les citations d'auteurs célèbres à travers la culture humaine";
                 return [
                     "view" => VIEW_DIR."home.php"
+                    "data" => [
+                        "title" => $title,
+                        "description" => $description
+                    ] 
                 ];
             }
 
-        public function listUsers() {
+        public function listtitle() {
 
             $manager = new UserManager(); //
             $users = $manager->findAll();

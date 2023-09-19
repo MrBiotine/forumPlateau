@@ -47,6 +47,7 @@
                 ];
             }
             else{
+                Session::addFlash("error", "Données manquantes ou invalides");
                 $this->redirectTo("User");
             }
         }

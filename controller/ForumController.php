@@ -195,7 +195,7 @@
             }
 
             /*Filter the datas send by the form*/
-            $nameCategory = filter_input(INPUT_POST, "nameCategory", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $nameTopic = filter_input(INPUT_POST, "nameTopic", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $textPost = filter_input(INPUT_POST, "textPost", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $idCategory = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
@@ -206,7 +206,7 @@
             }
              /* Add a topic and get his id */
              $idTopic = $topicManager->add([
-                "nameCategory" => $nameCategory,
+                "nameTopic" => $nameTopic,
                 "user_id" => Session::getUser()->getId(),
                 "category_id" => $idCategory
             ]);

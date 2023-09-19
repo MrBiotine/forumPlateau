@@ -68,7 +68,7 @@
                                     "pseudoUser" => $pseudoUser,
                                     "emailUser" => $emailUser,
                                     "passWordUser" => $passWordHash,
-                                    "roleUser" => json_encode(["ROLE_USER"]) 
+                                    "roleUser" => json_encode("ROLE_USER") 
                                 ])){
                                     Session::addFlash("success", "Inscription réussi ! Connectez-vous !");
                                     $this->redirectTo("security", "goToSignIn");
@@ -183,9 +183,7 @@
             /* destroy definitely the session then logout the user */
             if(session_unset() && session_destroy()){
                 Session::addFlash("success", "Déconnexion réussi !");
-                return [
-                    "view" => VIEW_DIR . "home.php"
-                ];
+                $this->redirectTo("security", "goToSignIn");
             }
             else{
                 Session::addFlash("error", "Échec de la déconnexion !");

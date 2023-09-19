@@ -119,17 +119,17 @@
          /**
          * Get the value of roleUser
          */ 
-        public function getRoleUser()
-        {
-                return $this->roleUser;
-        }
+        //public function getRoleUser()
+        //{
+        //        return $this->roleUser;
+        //}
         /**
          * Get the value of role with JSON
          */
-        //public function getRole()
-        //{
-        //        return json_decode($this->role);
-        //}
+        public function getRole()
+        {
+                return json_decode($this->roleUser);
+        }
 
          /**
          * Set the value of role with JSON
@@ -143,30 +143,26 @@
         //        return $this;
         //}
 
-                /*Get the role with JSON*/
-        //public function hasRole($role)
-        //{
-        //        $result = $this->getRole() == json_encode($role);
-        //        return $result;
-        //}
+       
+       
 
                /**
          * Set the value of roleUser
          *
          * @return  self
          */ 
-        // public function setRoleUser($role)
-        // {
-        //         //we get a JSON
-        //         $this->roleUser = json_decode($role);
-        //        
-        //         //if there is no assigned role, a default role will be assigned
-        //         if(empty($this->$role)){
-        //                 $this->roleUser[] = "ROLE_USER";
-        //         }
-        //
-        //         return $this;
-        // }
+        public function setRoleUser($role)
+        {
+                //we get a JSON
+                $this->roleUser = json_decode($role);
+               
+                //if there is no assigned role, a default role will be assigned
+                // if(empty($this->$role)){
+                //         $this->roleUser[] = "ROLE_USER";
+                // }
+        
+                return $this;
+        }
 
          /**
          * Get the value of isBanUser
@@ -198,25 +194,13 @@
         public function hasRole($role){
                 //si dans le tableau JSON on trouve un role qui corresponde au role en paramètre, on retourne le role
                 //return in_array($role, $this->getRoleUser());
+                
                 $result = $this->getRole() == json_encode($role);
-
-                return $result;
+		return $result;
 
         }
 
-        public function displayRole() {
-
-                if(in_array("ROLE_ADMIN", $this->getRole())) {
-    
-                return "admin";
-    
-                } else {
-                    return "user";
-    
-                }
-    
-            }
-
+        
          /* Getter and Setter of datePost */
          public function getDatePost(){
             $formattedDate = $this-datePost->format("d/m/Y, H:i:s");

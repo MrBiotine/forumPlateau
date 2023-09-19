@@ -136,8 +136,7 @@
 
             $topicManager = new TopicManager();         // Instancier cette variable pour accéder aux méthodes de la classe 
             $categoryManager = new CategoryManager();   // Instancier cette variable pour accéder aux méthodes de la classe et permettre l'ajout de topic dans une catégorie vide
-            $userManager = new UserManager();           // Instancier cette variable pour accéder aux méthodes de la classe et permettre l'ajout de topic dans une catégorie vide
-
+            
             return [
 
                 "view" => VIEW_DIR."forum/listTopics.php",

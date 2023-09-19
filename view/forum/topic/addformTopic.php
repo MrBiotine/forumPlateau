@@ -3,7 +3,7 @@ if(App\Session::getUser() && !App\Session::isBan()){
 
     $category = $result["data"]["category"]
     ?>
-    <form action="index.php?ctrl=topic&action=addTopic&id=<?= $category->getId() ?>" method="post">
+    <form action="index.php?ctrl=forum&action=addTopic&id=<?= $category->getId() ?>" method="post">
         <h1>Créer un sujet dans la catégorie "<?= $category->getNameCategory() ?>"</h1>
         <div>
             <label for="titre">Titre du sujet : </label>

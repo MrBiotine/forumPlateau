@@ -3,6 +3,7 @@
 $categorys = $result["data"]['categorys'];
 $title = $result["data"]["title"];
 $description = $result["data"]["description"];
+// var_dump(App\Session::getUser());
 ?>
 
 <h1>Les Catégories</h1>

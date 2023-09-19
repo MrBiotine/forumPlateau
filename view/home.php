@@ -1,6 +1,6 @@
 <?php
 //to debug
-var_dump($_SESSION["user"]);
+//var_dump($_SESSION["user"]);
 $title = $result["data"]["title"];
 $description = $result["data"]["description"];
 ?>

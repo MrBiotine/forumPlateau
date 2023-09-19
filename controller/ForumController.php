@@ -24,7 +24,7 @@
             $categoryManager = new CategoryManager();   // Instantiate a new object to access the class's methods
             //var for meta tag
             $title = "Les Catégories";
-            $description = "liste positive des catégoties disponibleq"
+            $description = "liste positive des catégoties disponibleq";
 
             return [                                    // findAll() is a native function from framework
                 

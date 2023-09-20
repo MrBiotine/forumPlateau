@@ -25,7 +25,7 @@
             /* Check if the filter fail */
             if(!$idTopic){
                 Session::addFlash("error","Données invalides");              
-                $this->redirectTo("forum","listTopics");
+                $this->redirectTo("forum");
             }
             return [
                     "view" => VIEW_DIR . "forum/Post/listPosts.php",
@@ -184,17 +184,16 @@
                 Session::addFlash("error", "Vous n'êtes pas autoriser à modifier le post !");
                 $this->redirectTo("post", "listPosts", "$idTopic");
             }
-             /* Finally the post is added */
-             if($postManager->add([
-                "textPost" => $textPost,
-                "user_id" => Session::getUser()->getId(),
-                "topic_id" => $idTopic
-            ])){
-                Session::addFlash("success", "Ajout du post dans le topic '" . $topicManager->findOneById($idTopic)->getNameTopic() . "' réussi !");
+
+            /*Get the topic id that contain this post*/
+            $idTopic = $postManager->findOneById($idPost)->getTopic()->getId();
+             /* Finally the post is updated */
+             if($postManager->updatePost($idPost, $newPost)){
+                Session::addFlash("success", "Modification de message dans le topic '" . $topicManager->findOneById($idTopic)->getNameTopic() . "' réussi !");
                 $this->redirectTo("post", "listPosts", "$idTopic");
             }
             else{
-                Session::addFlash("error", "Échec de l'ajout du post !");
+                Session::addFlash("error", "Échec de l amodification du post !");
                 $this->redirectTo("post", "addFormPost");
             }
         }

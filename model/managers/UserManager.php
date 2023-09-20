@@ -120,5 +120,15 @@
             return DAO::update($requete, ["id" => $id, "role" => $role]);
         }
 
+         /**
+         * update a user ban status
+         */
+        public function updateBan($id, $ban){
+            $requete = "UPDATE " . $this->tableName . "
+                        SET isBanUser = :ban
+                        WHERE id_" . $this->tableName . " = :id";
+            return DAO::update($requete, ["id" => $id, "ban" => $ban]);
+        }
+
 
     }

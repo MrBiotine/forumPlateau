@@ -24,7 +24,7 @@
                 ];
             }
 
-        public function listtitle() {
+        public function listUsers() {
 
             $manager = new UserManager(); //
             $users = $manager->findAll();

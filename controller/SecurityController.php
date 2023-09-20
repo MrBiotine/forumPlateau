@@ -148,9 +148,7 @@
                                 $this->redirectTo("forum");
                             }else{
                                 Session::addFlash("error", "Acces refusé - vous êtes Banni !");
-                                return [
-                                    "view" => VIEW_DIR."home.php"
-                                ];
+                                $this->redirectTo("home");
                             }
                             
                         }
@@ -187,9 +185,7 @@
             }
             else{
                 Session::addFlash("error", "Échec de la déconnexion !");
-                return [
-                    "view" => VIEW_DIR . "home.php"
-                ];
+                $this->redirectTo("home");
             }
         }
 
@@ -203,7 +199,7 @@
                 "view" => VIEW_DIR . "security/updateFormPassWord.php"
             ];
         }
-        /*To update a pssWord*/
+        /*To update a passWord*/
         public function updatePassWord(){
             /* the required objects are instantiated */
             $userManager = new UserManager();         
@@ -256,7 +252,7 @@
             }
         }
 
-        /*----------------------------------------SECTION EMAL*/
+        /*----------------------------------------SECTION EMAIL -------------------------------------------------------------*/
              /**
          * Access form to update the user email
          */
@@ -319,12 +315,45 @@
             if($userManager->updateMail(Session::getUser()->getId(), $newEmail)){
                 Session::addFlash("success", "Modification du mel réussi !");
                 Session::getUser()->setEmailUser($newEmail);
-                $this->redirectTo("security", "goProfil");
+                $this->redirectTo("security", "goProfile");
             }
             else{
                 Session::addFlash("error", "Échec de la modification du mel !");
                 $this->redirectTo("security", "updateFormPassWord");
             }
+
+
+        }
+
+        /*-----------------------------------Data anonymization---------------------------------------------*/
+        /*Delete a user profile and anonymize its data*/
+        public function deleteProfil(){
+            /* the required objects are instantiated */
+            $userManager = new UserManager();              
+
+            /* Get the required variable*/
+            $idUser = Session::getUser()->getId();
+            $hashPassWord = Session::getUser()->getPassWordUser();
+
+            /*values for anonymization*/
+            $anonymePseudo = "profile supprimé";
+            $anonymeMail = "mel_anonyme".$isUser;
+            $anonymePassWord = password_hash($hashPassWord, PASSWORD_DEFAULT);
+            $anonymeRole = "UNKNOW_ROLE";
+            $anonymeBan = 1;
+
+            if($userManager->updatePseudo(idUser, $anonymePseudo) && $userManager->updateMail(idUser, $anonymeMail) && $userManager->updatePassWord(idUser, $anonymePassWord) && $userManager->updateRole(idUser, $anonymeRole && $userManager->updateBan(idUser, $anonymeBan))){
+                Session::addFlash("success", "Suppression du profil réussi !");
+                $this->redirectTo("security", "logOut");
+            }else{
+                Session::addFlash("error", "Échec de la supression !");
+                $this->redirectTo("home");
+            }
+
+
+
+
+
 
 
         }

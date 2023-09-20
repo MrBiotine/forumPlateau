@@ -193,6 +193,8 @@
             }
         }
 
+        /*-------------------------SECTION PASSWORD--------------------------------------------------------------------*/
+        
          /**
          * Access form to update the passWord
          */
@@ -253,7 +255,79 @@
                 $this->redirectTo("security", "updateFormPassWord");
             }
         }
+
+        /*----------------------------------------SECTION EMAL*/
+             /**
+         * Access form to update the user email
+         */
+        public function updateFormEmail(){
+            return[
+                "view" => VIEW_DIR . "security/updateFormPassWord.php"
+            ];
+        }
+
+        public function updateEmail() {
+            /* the required objects are instantiated */
+            $userManager = new UserManager();         
             
+            /* if the form fail */
+            if(!isset($_POST["submitUpdateEmail"])){
+                Session::addFlash("error", "Pas de donées ! Le formulaire à échoué !");
+                $this->redirectTo("security");
+            }                
+            /* Filtering inputs */
+            $oldEmail = filter_input(INPUT_POST, "oldEmail", FILTER_SANITIZE_EMAIL);
+            $newEmail = filter_input(INPUT_POST, "newEmail", FILTER_SANITIZE_EMAIL);
+            $confirmedEmail = filter_input(INPUT_POST, "ConfirmedEmail", FILTER_SANITIZE_EMAIL);
+            $passWord = filter_input(INPUT_POST, "passWord", FILTER_SANITIZE_SPECIAL_CHARS);
+
+
+
+            /*ckeck if the filters fail*/
+            if(!$oldEmail || !$newEmail || !$emailConfirmed || !$passWord){
+                Session::addFlash("error", "Données manquantes ! Le filtrage à échoué !");
+                $this->redirectTo("security");
+            }
+
+            /* check if the oldEmail matche the current user email */
+            if($oldEmail != Session::getUser()->getEmailUser()){
+                Session::addFlash("error", "Eamil incorrect - réessayer");
+                $this->redirectTo("security", "updateFormEmail");
+            }
+
+             /* check if the nex email matche the confirmed email */
+             if($newEmail != $confirmedEmail){
+                Session::addFlash("error", "Eamil incorrect - réessayer");
+                $this->redirectTo("security", "updateFormEmail");
+            }
+
+            
+            $hashedPassWord = Session::getUser()->getPassWordUser(); // get the user hashed passWord stored in database
+
+            /*check if get hashed passWord fail*/
+            if(!$hashedPassWord){
+                Session::addFlash("error", "Erreur dans la session - donnée non récupérré");
+                $this->redirectTo("security");
+            }
+            /*check If Password no matches hashed pssWord*/
+            if(!password_verify($passWord, $hashedPassWord)){
+                Session::addFlash("error", "Mot de passe incorrect - réessayer");
+                $this->redirectTo("security", "updateFormEmail");
+            }
+
+            /*The new user email is inserted into db and added to the current session*/
+            if($userManager->updateMail(Session::getUser()->getId(), $newEmail)){
+                Session::addFlash("success", "Modification du mel réussi !");
+                Session::getUser()->setEmailUser($newEmail);
+                $this->redirectTo("security", "goProfil");
+            }
+            else{
+                Session::addFlash("error", "Échec de la modification du mel !");
+                $this->redirectTo("security", "updateFormPassWord");
+            }
+
+
+        }
 
     }
 

@@ -223,14 +223,45 @@
             else{
                 $session->addFlash("error", "Échec de l'ajout du topic !");
                 $this->redirectTo("forum", "addFormTopic", "$idCategorie");
-            }
-
-
+            }         
 
 
         }
 
-        
+        /*shares reserved for admin : delete a topic*/
+            public function deleteTopic() {
+                /* the required objects are instantiated */
+            $topicManager = new TopicManager();
+            $postManager = new PostManager();
+            
+            // filter data received from GET
+            $idTopic = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+            //check if filter fail
+            if(!$idTopic){
+                Session::addFlash('error',"Données invalide - le filtrage a échouée !");
+                $this->redirectTo("forum");
+            }
+
+            //if user is not the admin, the action is canceled
+            if(!Session::isAdmin()){
+                Session::addFlash('error',"Action refusé - vous n'avez pas le niveau requis de privilège");
+                $this->redirectTo("forum");
+            }
+            
+            $nameTopic = $topicManager->findOneById($idTopic)->getNameTopic();
+
+            /* Delete on cascade : delete all the posts linked with the Topic and finally the Topic itself */
+            if($postManager->deleteAllPostByTopic($idTopic) && $TopicManager->delete($idTopic)){
+                Session::addFlash("success", "Suppression du sujet : '$nameTopic' réussi !");
+                $this->redirectTo("forum");
+            }
+            else{
+                Session::addFlash("error", "Échec de la suppression !");
+                $this->redirectTo("forum");
+                }
+
+            }
 
 
         
